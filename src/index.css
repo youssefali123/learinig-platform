@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --color-primary-50: #eef2ff;
+  --color-primary-100: #e0e7ff;
+  --color-primary-200: #c7d2fe;
+  --color-primary-300: #a5b4fc;
+  --color-primary-400: #818cf8;
+  --color-primary-500: #6366f1;
+  --color-primary-600: #4f46e5;
+  --color-primary-700: #4338ca;
+  --color-primary-800: #3730a3;
+  --color-primary-900: #312e81;
+
+  --color-accent-400: #f97316;
+  --color-accent-500: #ea580c;
+
+  --color-success-500: #22c55e;
+  --color-warning-500: #eab308;
+  --color-error-500: #ef4444;
+
+  --color-surface: #f8fafc;
+  --color-card: #ffffff;
+
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+
+  --color-border: #e2e8f0;
+
+  --color-glass-bg: rgba(255, 255, 255, 0.7);
+  --color-glass-border: rgba(255, 255, 255, 0.3);
+
+  --color-skeleton-start: #e2e8f0;
+  --color-skeleton-mid: #f1f5f9;
+
+  --color-scrollbar-track: #f1f5f9;
+  --color-scrollbar-thumb: #a5b4fc;
+  --color-scrollbar-thumb-hover: #818cf8;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+
+/* ✅ Dark mode override */
+.dark {
+
+  --color-surface: #020617;
+  --color-card: #0f172a;
+  /* Slate 900 for contrast against surface */
+
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+
+  --color-border: #1e293b;
+
+  --color-glass-bg: rgba(15, 23, 42, 0.7);
+  --color-glass-border: rgba(255, 255, 255, 0.05);
+
+  --color-skeleton-start: #1e293b;
+  --color-skeleton-mid: #0f172a;
+
+  --color-scrollbar-track: #020617;
+  --color-scrollbar-thumb: #3730a3;
+  --color-scrollbar-thumb-hover: #4f46e5;
+}
+
+@theme {
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: var(--color-primary-900);
+
+  --color-accent-400: var(--color-accent-400);
+  --color-accent-500: var(--color-accent-500);
+
+  --color-success-500: var(--color-success-500);
+  --color-warning-500: var(--color-warning-500);
+  --color-error-500: var(--color-error-500);
+
+  --color-surface: var(--color-surface);
+  --color-surface-dark: var(--color-surface-dark);
+  --color-card: var(--color-card);
+  --color-card-dark: var(--color-card-dark);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-border: var(--color-border);
+
+  --font-sans: var(--font-sans);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-scrollbar-thumb);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-scrollbar-thumb-hover);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass effect */
+.glass {
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-glass-border);
+}
+
+/* Animated gradient */
+@keyframes gradient-shift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Skeleton animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--color-skeleton-start) 25%, var(--color-skeleton-mid) 50%, var(--color-skeleton-start) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}

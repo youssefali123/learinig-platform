@@ -1,0 +1,72 @@
+# E-Learning Platform Completion Plan
+
+This plan outlines the steps required to transition the current React-based E-Learning demo into a fully functional, production-ready application integrated with a real backend API, complete with authentication, authorization, and dynamic data. 
+
+The workload is logically divided into two roles: **Person A (Backend & Infrastructure)** and **Person B (Frontend & Integration)**.
+
+## Project Stack Recommendation
+Since the frontend is built with React ([.jsx](file:///c:/Users/aliy0/Documents/el-learning/src/App.jsx)) and Redux, the recommended stack is **MERN** (MongoDB, Express, React, Node.js) to keep the language consistent (JavaScript/TypeScript) across the stack.
+
+---
+
+## 👨‍💻 Person A: Backend & API Development
+
+**Person A** will be responsible for building the server, database integration, and the APIs that the frontend will consume.
+
+### 1. Project Initialization & Database Design
+- [ ] Set up a Node.js/Express project.
+- [ ] Connect to a MongoDB database (e.g., using Mongoose).
+- [ ] Design robust schemas:
+  - `User`: (id, name, email, password_hash, role: student|instructor|admin, profile_details)
+  - `Course`: (id, title, description, instructor_id, price, modules/videos, published_status)
+  - `Quiz`: (id, course_id, questions, answers, pass_mark)
+  - `Enrollment/Progress`: (id, student_id, course_id, completed_videos, quiz_scores)
+
+### 2. Authentication & Authorization API
+- [ ] Implement user registration endpoint with password hashing (bcrypt).
+- [ ] Implement user login endpoint issuing JWT (JSON Web Tokens).
+- [ ] Create authentication middleware to verify JWT.
+- [ ] Create authorization middleware to protect routes based on role (e.g., only `instructor` can create courses).
+
+### 3. Core Features APIs
+- [ ] **Courses API**: Endpoints for CRUD operations (Create, Read, Update, Delete). Add file upload capabilities (e.g., using Multer) for course thumbnails and video content.
+- [ ] **Quizzes API**: Endpoints for instructors to create questions/answers, and endpoints for students to submit quiz attempts for evaluation.
+- [ ] **Enrollment API**: Endpoints to handle students joining a course and fetching their personalized active courses.
+
+### 4. Testing & Deployment
+- [ ] Write API documentation (e.g., Postman collection or Swagger) to hand over to Person B.
+- [ ] Deploy the backend to a cloud provider (e.g., Render, Railway, or AWS) and host the database (e.g., MongoDB Atlas).
+
+---
+
+## 👩‍💻 Person B: Frontend Integration & UI Completion
+
+**Person B** will be responsible for replacing all the current demo data (`data/` folder) with real API calls, securing the frontend routes, and completing the user interface.
+
+### 1. API Integration Setup
+- [ ] Set up an HTTP client (like `axios` or use `RTK Query` since Redux is already present).
+- [ ] Create an API service layer to manage backend endpoints and intercept responses (to handle token expiration/refresh).
+
+### 2. Authentication UI & Protected Routes
+- [ ] Refactor [features/authSlice.js](file:///c:/Users/aliy0/Documents/el-learning/src/features/authSlice.js) to perform actual login/register API requests and securely store the JWT (e.g., in `localStorage` or ideally secure cookies).
+- [ ] Implement **Protected Routes** in [App.jsx](file:///c:/Users/aliy0/Documents/el-learning/src/App.jsx) or the router configuration:
+  - Redirect unauthenticated users away from `/student` or `/instructor` routes.
+  - Redirect authenticated students away from `/instructor` routes.
+- [ ] Complete the Login and Registration forms ([src/pages/public/Register.jsx](file:///c:/Users/aliy0/Documents/el-learning/src/pages/public/Register.jsx)) with proper validation and error handling (toast notifications).
+
+### 3. State Management Refactoring
+- [ ] Refactor [features/coursesSlice.js](file:///c:/Users/aliy0/Documents/el-learning/src/features/coursesSlice.js) to fetch the real course catalog from the backend. Implement loading (spinners) and error states.
+- [ ] Refactor [features/quizSlice.js](file:///c:/Users/aliy0/Documents/el-learning/src/features/quizSlice.js) to fetch real quizzes and submit student answers.
+- [ ] Remove all dependencies on static mock data from the components.
+
+### 4. Page Completions
+- [ ] **Instructor Dashboard (`pages/instructor/*`)**: Complete the forms for creating courses, `QuizBuilder.jsx`, and uploading materials. Ensure forms handle `FormData` correctly for file uploads.
+- [ ] **Student Dashboard (`pages/student/*`)**: Complete the `StudentProfile.jsx`, course viewing player, and progress tracking visualizations.
+- [ ] **Public Pages (`pages/public/*`)**: Ensure the `CourseCatalog.jsx` correctly paginates and filters real courses from the API.
+
+---
+
+## 🔄 Collaboration & Merging
+- Both persons should agree on the **API Contract** (JSON request/response structures) before starting deep development.
+- Person B can use tools like Postman or Mock Service Worker (MSW) to simulate the API while Person A is still building the real backend.
+- Conduct cross-testing: Person B tests the backend endpoints for errors, and Person A tests the frontend integrations for data mapping accuracy.
